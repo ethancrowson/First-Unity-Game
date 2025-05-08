@@ -28,6 +28,10 @@ namespace StarterAssets
 
 		public GameObject gun;
 
+        public AudioSource GunReloadSource;
+        public AudioClip GunReloadClip;
+        private bool isReloading = false;
+
 #if ENABLE_INPUT_SYSTEM
         public void OnMove(InputValue value)
 		{
@@ -53,7 +57,7 @@ namespace StarterAssets
 		}
         public void OnShoot(InputValue value)
         {
-            if (value.isPressed && Time.time - lastShotTime > fireRate)
+            if (value.isPressed && !isReloading && StarterScript.fiveSevenAmmoCount > 0 && Time.time - lastShotTime > fireRate)
             {
 				StarterScript.fiveSevenAmmoCount--;
                 Animator gunAnim = gun.GetComponent<Animator>();
@@ -62,7 +66,16 @@ namespace StarterAssets
                 GunFireSource.PlayOneShot(GunShotClip);
             }
         }
-
+        public void OnReload(InputValue value)
+        {
+            if (value.isPressed && !isReloading && StarterScript.fiveSevenAmmoCount < 20)
+			{
+				isReloading = true;
+                Animator gunAnim = gun.GetComponent<Animator>();
+				gunAnim.SetTrigger("Reload");
+                GunReloadSource.PlayOneShot(GunReloadClip);
+            }
+        }
 #endif
 
 
@@ -83,7 +96,10 @@ namespace StarterAssets
 
 		public void SprintInput(bool newSprintState)
 		{
-			sprint = newSprintState;
+			if (!isReloading)
+			{
+				sprint = newSprintState;
+			}
 		}
 		
 		private void OnApplicationFocus(bool hasFocus)
@@ -95,6 +111,11 @@ namespace StarterAssets
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
-	}
+        public void FinishReload()
+        {
+            isReloading = false;
+            StarterScript.fiveSevenAmmoCount = 20;
+        }
+    }
 	
 }

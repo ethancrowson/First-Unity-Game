@@ -37,13 +37,13 @@ public class StarterScript : MonoBehaviour
         yield return new WaitForSeconds(3f);
         fadeIn.SetActive(false);
         OpenGate();
-        yield return new WaitForSeconds(30f);
+        //yield return new WaitForSeconds(30f);
         // Make sure the object is active *before* setting parameters
-        fadeIn.SetActive(true);
+        //fadeIn.SetActive(true);
 
-        Animator animator = fadeIn.GetComponent<Animator>();
-        animator.SetFloat("FadeMultiplier", -1f);
-        animator.Play("FadeIn", 0, 1f); // Start at the end
+        //Animator animator = fadeIn.GetComponent<Animator>();
+        //animator.SetFloat("FadeMultiplier", -1f);
+        //animator.Play("FadeIn", 0, 1f); // Start at the end
 
     }
 }

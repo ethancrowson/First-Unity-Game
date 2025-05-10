@@ -1,14 +1,10 @@
 using UnityEngine;
 
-public abstract class Interactable : MonoBehaviour 
+public interface Interactable
 {
-    public string promptMessage;
+    public string InteractMessage { get; }
 
-    public void BaseInteract()
-    {
-        Interact();
-    }
-    protected virtual void Interact()
+    public void Interact()
     {
 
     }

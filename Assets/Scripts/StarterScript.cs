@@ -4,11 +4,7 @@ using UnityEngine.InputSystem;
 
 public class StarterScript : MonoBehaviour
 {
-    [SerializeField] GameObject myGate;
-
     [SerializeField] GameObject fadeIn;
-
-    [SerializeField] AudioSource Sus;
 
     [SerializeField] GameObject ammoDisplay;
     public static int fiveSevenAmmoCount = 20;
@@ -25,18 +21,11 @@ public class StarterScript : MonoBehaviour
         ammoDisplay.GetComponent<TMPro.TMP_Text>().text = "" + fiveSevenAmmoCount;
 
     }
-    public void OpenGate()
-    {
-        Sus.Play();
-        myGate.GetComponent<Animator>().Play("GateSwing");
-    }
 
-   
     IEnumerator MySequence()
     {
         yield return new WaitForSeconds(3f);
         fadeIn.SetActive(false);
-        OpenGate();
         //yield return new WaitForSeconds(30f);
         // Make sure the object is active *before* setting parameters
         //fadeIn.SetActive(true);

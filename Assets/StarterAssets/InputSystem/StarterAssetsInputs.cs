@@ -27,7 +27,13 @@ namespace StarterAssets
         private float lastShotTime;
         public float fireRate = 0.2f;
 
-		public GameObject gun;
+        [SerializeField]
+        GameObject bulletPrefab;
+
+        public Transform firePoint; // Empty GameObject at muzzle
+        public float fireForce = 25f;
+
+        public GameObject gun;
 
         public AudioSource GunReloadSource;
         public AudioClip GunReloadClip;
@@ -65,6 +71,9 @@ namespace StarterAssets
                 gunAnim.SetTrigger("Fire");
                 lastShotTime = Time.time;
                 GunFireSource.PlayOneShot(GunShotClip);
+                var bullet = Instantiate(bulletPrefab, firePoint.position + firePoint.forward * 0.2f, firePoint.rotation);
+                bullet.GetComponent<Rigidbody>().angularVelocity = firePoint.forward * fireForce;
+				bullet.GetComponent<Rigidbody>().linearDamping = 0.1f;
             }
         }
         public void OnReload(InputValue value)

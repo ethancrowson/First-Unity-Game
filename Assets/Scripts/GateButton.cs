@@ -12,10 +12,13 @@ public class GateButton : MonoBehaviour, Interactable
     GameObject gate;
 
     [SerializeField] 
-    AudioSource sus;
+    AudioSource gateSource;
+
+    [SerializeField]
+    AudioClip gateClip;
     void Open()
     {
-        sus.Play();
+        gateSource.PlayOneShot(gateClip);
         gate.GetComponent<Animator>().Play("GateSwing");
     }
 
